@@ -1,0 +1,61 @@
+/* ====================================
+   All NEXCALC design tokens live here.
+==================================== */
+
+:root {
+    /* ── Backgrounds ── */
+    --color-void: #050d1a;
+    --color-deep-space: #0a1628;
+    --color-panel: #1a2d4a;
+    --color-surface: #0f2035;
+    --color-key-default: #152338;
+    --color-key-hover: #1e3050;
+    --color-key-active: #243a5e;
+
+    /* ── Accent Colors ── */
+    --color-cyan: #00c8ff;
+    --color-cyan-dim: rgba(0, 200, 255, 0.15);
+    --color-cyan-glow: rgba(0, 200, 255, 0.3);
+    --color-green: #00ff9d;
+    --color-green-dim: rgba(0, 255, 157, 0.12);
+    --color-plasma: #ff6b35;
+    --color-plasma-dim: rgba(255, 107, 53, 0.15);
+
+    /* ── Text ── */
+    --color-text-primary: #e8f4f8;
+    --color-text-secondary: rgba(232, 244, 248, 0.5);
+    --color-text-display: #ffffff;
+    --color-text-cyan: #00c8ff;
+    --color-text-green: #00ff9d;
+    --color-text-muted: rgba(232, 244, 248, 0.25);
+
+    /* ── Borders ── */
+    --color-border: rgba(0, 200, 255, 0.12);
+    --color-border-strong: rgba(0, 200, 255, 0.25);
+
+    /* ── Typography ── */
+    /* logo, headings */
+    --font-display: 'Orbitron', monospace;
+    /* buttons, display, labels */
+    --font-mono: 'Share Tech Mono', monospace;
+    /* descriptions */
+    --font-body: 'Inter', sans-serif;
+
+    /* ── Spacing ── */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* ── Radii ── */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    /* ── Transitions ── */
+    --transition-fast: 80ms ease;
+    --transition-base: 150ms ease;
+    --transition-slow: 300ms ease;
+}
