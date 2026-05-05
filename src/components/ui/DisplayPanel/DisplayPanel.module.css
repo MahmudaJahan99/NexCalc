@@ -191,13 +191,14 @@
 /* Cursor blink when actively typing */
 .cursor {
   position: absolute;
-  right: 0;
+  /* right: 0; */
+  margin-left: 5px;
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
-  height: 0.8em;
-  background: var(--color-cyan);
-  box-shadow: 0 0 6px var(--color-cyan), 0 0 12px rgba(0, 200, 255, 0.4);
+  height: 1em;
+  background: #00c8ff;
+  box-shadow: 0 0 6px #00c8ff, 0 0 12px rgba(0, 200, 255, 0.4);
   border-radius: 1px;
   animation: cursorBlink 1s step-end infinite;
   /* z-index above everything in the display */
