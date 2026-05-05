@@ -1,25 +1,6 @@
-// src/reducers/calculatorReducer.test.js
-//
-// ╔══════════════════════════════════════════════════════════════════════════╗
-// ║  LEARNING NOTE — Testing a Reducer                                     ║
-// ╠══════════════════════════════════════════════════════════════════════════╣
-// ║                                                                        ║
-// ║  Because reducers are PURE FUNCTIONS, testing them is beautifully      ║
-// ║  simple. No mocking. No DOM. No React. Just:                           ║
-// ║                                                                        ║
-// ║    const result = calculatorReducer(someState, someAction)             ║
-// ║    expect(result.displayValue).toBe('42')                              ║
-// ║                                                                        ║
-// ║  This is one of the biggest advantages of the reducer pattern —        ║
-// ║  your most complex logic is also your most testable logic.             ║
-// ╚══════════════════════════════════════════════════════════════════════════╝
-
 import { describe, it, expect } from 'vitest'
 import { calculatorReducer, initialState, ACTIONS } from './calculatorReducer'
 
-// ── Helper: build a custom starting state ─────────────────────────────────
-// Rather than repeating spread syntax everywhere, this helper lets us write:
-//   stateWith({ expression: '5+3', justEvaluated: true })
 function stateWith(overrides) {
   return { ...initialState, ...overrides }
 }

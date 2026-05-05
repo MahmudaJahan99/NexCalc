@@ -1,16 +1,3 @@
-// src/components/ui/KeyPad/KeyPad.test.jsx
-//
-// Integration test for KeyPad. Unlike CalcKey's unit test, this one
-// renders KeyPad inside a real CalculatorProvider and verifies that
-// pressing keys actually updates the display.
-//
-// ── Learning Note — Integration vs Unit tests ──────────────────────────────
-// Unit test: CalcKey in isolation — fast, narrow, tests ONE thing
-// Integration test: KeyPad + Provider + Reducer + mathEngine working together
-//   → slower, wider, confirms the whole chain works
-// Both matter. Units find WHERE the bug is; integration confirms NOTHING IS BROKEN.
-// ─────────────────────────────────────────────────────────────────────────
-
 import { describe, it, expect } from 'vitest'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import { CalculatorProvider } from '@/context/CalculatorContext'
