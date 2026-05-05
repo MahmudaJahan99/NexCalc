@@ -1,0 +1,183 @@
+/* Toggle button (always visible) */
+.toggleBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--color-text-secondary);
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.toggleBtn:hover {
+    color: var(--color-cyan);
+    border-color: var(--color-border-strong);
+}
+
+.toggleBtn.active {
+    color: var(--color-cyan);
+    border-color: rgba(0, 200, 255, 0.35);
+    background: rgba(0, 200, 255, 0.06);
+}
+
+.countBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: rgba(0, 200, 255, 0.15);
+    color: var(--color-cyan);
+    font-size: 9px;
+    letter-spacing: 0;
+}
+
+/* Panel container */
+.panel {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-panel);
+}
+
+/* Panel header */
+.panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.panelTitle {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+}
+
+.clearBtn {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: rgba(255, 107, 53, 0.6);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 0;
+    transition: color var(--transition-fast);
+}
+
+.clearBtn:hover {
+    color: var(--color-plasma);
+}
+
+/* Entry list */
+.list {
+    max-height: 220px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 200, 255, 0.2) transparent;
+}
+
+.list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: rgba(0, 200, 255, 0.2);
+    border-radius: 2px;
+}
+
+/* Individual history entry */
+.entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(0, 200, 255, 0.04);
+    gap: 8px;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.entry:last-child {
+    border-bottom: none;
+}
+
+.entry:hover {
+    background: rgba(0, 200, 255, 0.04);
+}
+
+.entry:hover .deleteBtn {
+    opacity: 1;
+}
+
+.entryContent {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+}
+
+.entryExpression {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.entryResult {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--color-text-primary);
+}
+
+.entryArrow {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.deleteBtn {
+    opacity: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-text-muted);
+    padding: 2px 4px;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.deleteBtn:hover {
+    color: var(--color-plasma);
+}
+
+/* Empty state */
+.empty {
+    padding: 24px 14px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--color-text-muted);
+}

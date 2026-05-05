@@ -1,6 +1,11 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useCalculator } from '../../../hooks/useCalculator'
+import { useKeyboard } from '@/hooks/useKeyboard'
+import { useHistory } from '@/hooks/useHistory'
 import DisplayPanel from '@/components/ui/DisplayPanel'
 import KeyPad from '@/components/ui/KeyPad'
+import HistoryPanel from '@/components/ui/HistoryPanel'
 import styles from './CalculatorShell.module.css'
 
 // Animation for the whole calculator shell on initial load
@@ -16,6 +21,22 @@ const shellAnimation = {
 
 // Main calculator shell component
 export default function CalculatorShell() {
+    // Initialize keyboard handling (global key listeners)
+    useKeyboard()
+
+    // History state and actions
+    const { entries, addEntry, deleteEntry, clearHistory } = useHistory()
+
+    // Read calculator state to know when to record history
+    const { expression, displayValue, justEvaluated, isError } = useCalculator()
+
+    // Record a new history entry after each successful evaluation
+    useEffect(() => {
+        if (justEvaluated && !isError && displayValue && displayValue !== '0') {
+            addEntry(expression, displayValue)
+        }
+    }, [justEvaluated, isError, expression, displayValue, addEntry])
+
     return (
         <div className={styles.page}>
             <motion.div
@@ -31,6 +52,13 @@ export default function CalculatorShell() {
 
                 {/* LCD Display */}
                 <DisplayPanel />
+
+                {/* ── History Panel (toggle button + expandable list) ── */}
+                <HistoryPanel
+                    entries={entries}
+                    onDelete={deleteEntry}
+                    onClear={clearHistory}
+                />
 
                 {/* Button grid */}
                 <KeyPad />
