@@ -2,7 +2,7 @@ import { createContext, useReducer, useCallback, useMemo } from 'react'
 import { calculatorReducer, initialState, ACTIONS } from '../reducers/calculatorReducer'
 import { ANGLE_MODES } from '../constants/keys'
 
-const CalculatorContext = createContext(null)
+export const CalculatorContext = createContext(null)
 
 export function CalculatorProvider({ children }) {
     const [state, dispatch] = useReducer(calculatorReducer, initialState)

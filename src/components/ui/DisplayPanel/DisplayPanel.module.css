@@ -1,0 +1,163 @@
+/* Display outer shell */
+.display {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px 14px;
+  overflow: hidden;
+
+  /* Inset shadow makes it look recessed like a real LCD panel */
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.5),
+    inset 0 0 30px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(0, 200, 255, 0.05);
+}
+
+/* Scan-line overlay across the whole display */
+.display::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.08) 3px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+/* Subtle inner glow at top edge */
+.display::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.3), transparent);
+  z-index: 3;
+}
+
+/* Top status bar (DEG/RAD, mode indicators) */
+.statusBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 4;
+}
+
+.statusBadge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.statusBadgeAngle {
+  color: var(--color-cyan);
+  border: 1px solid rgba(0, 200, 255, 0.35);
+  background: rgba(0, 200, 255, 0.08);
+}
+
+.statusBadgeError {
+  color: var(--color-plasma);
+  border: 1px solid rgba(255, 107, 53, 0.35);
+  background: rgba(255, 107, 53, 0.08);
+  animation: errorPulse 1.2s ease-in-out infinite;
+}
+
+.statusBadgeAns {
+  color: rgba(255, 200, 100, 0.8);
+  border: 1px solid rgba(255, 200, 100, 0.25);
+  background: rgba(255, 200, 100, 0.06);
+}
+
+@keyframes errorPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/*  Expression line (smaller, above the main result) */
+.expressionLine {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-align: right;
+  min-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 4;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* Main display value */
+.mainValue {
+  font-family: var(--font-mono);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 4;
+  line-height: 1;
+
+  /* Font size scales based on value length — see component */
+  font-size: var(--display-font-size, 36px);
+
+  /* Normal state: white text */
+  color: var(--color-text-display);
+
+  /* Subtle text-shadow glow on the digits */
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+
+  transition: font-size 100ms ease, color var(--transition-base);
+}
+
+/* Error state: plasma orange text */
+.mainValueError {
+  color: var(--color-plasma);
+  text-shadow: 0 0 16px rgba(255, 107, 53, 0.35);
+}
+
+/* Cursor blink when actively typing */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--color-cyan);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursorBlink 1s step-end infinite;
+  box-shadow: 0 0 6px var(--color-cyan);
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Corner brand mark */
+.brandMark {
+  position: absolute;
+  bottom: 10px;
+  left: 16px;
+  font-family: var(--font-display);
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: rgba(0, 200, 255, 0.2);
+  z-index: 4;
+  pointer-events: none;
+  text-transform: uppercase;
+}

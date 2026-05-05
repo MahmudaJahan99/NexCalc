@@ -1,0 +1,191 @@
+/* Base button */
+.key {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: var(--color-text-primary);
+
+    background: var(--color-key-default);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    /* Height controlled by the parent grid, width fills the cell */
+    width: 100%;
+    height: 100%;
+    min-height: 44px;
+
+    /* Subtle top highlight — gives the key a "raised panel" feel */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+
+    outline: none;
+    overflow: hidden;
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+/* Scan-line overlay (the sci-fi texture) */
+/* A ::before pseudo-element creates horizontal scan lines across every key  */
+.key::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.08) 2px,
+            rgba(0, 0, 0, 0.08) 3px);
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+/* Ripple/glow layer */
+/* ::after will hold the press-glow effect (driven via CSS class toggling) */
+.key::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+}
+
+/* Hover */
+.key:hover {
+    background: var(--color-key-hover);
+    border-color: var(--color-border-strong);
+}
+
+/* Focus (keyboard navigation) */
+.key:focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 1px;
+}
+
+/* Disabled state */
+.key:disabled,
+.key[data-disabled='true'] {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* VARIANT: number keys */
+.variantNumber {
+    color: var(--color-text-primary);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* VARIANT: operator keys */
+.variantOperator {
+    color: var(--color-cyan);
+    border-color: var(--color-cyan-dim);
+}
+
+.variantOperator:hover {
+    background: rgba(0, 200, 255, 0.06);
+    border-color: var(--color-border-strong);
+}
+
+/* VARIANT: function keys (sin, cos, √ etc.) */
+.variantFunction {
+    color: var(--color-green);
+    font-size: 12px;
+    border-color: var(--color-green-dim);
+}
+
+.variantFunction:hover {
+    background: rgba(0, 255, 157, 0.05);
+    border-color: rgba(0, 255, 157, 0.2);
+}
+
+/* VARIANT: action keys (AC, DEL, =, SHIFT) */
+.variantAction {
+    color: var(--color-text-secondary);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+}
+
+/* VARIANT: equals key ─── */
+.variantEquals {
+    background: rgba(0, 200, 255, 0.1);
+    border-color: rgba(0, 200, 255, 0.35);
+    color: var(--color-cyan);
+    font-size: 20px;
+}
+
+.variantEquals:hover {
+    background: rgba(0, 200, 255, 0.18);
+    border-color: rgba(0, 200, 255, 0.6);
+}
+
+.variantEquals::after {
+    background: radial-gradient(circle, rgba(0, 200, 255, 0.2) 0%, transparent 70%);
+}
+
+/* VARIANT: AC (clear) key */
+.variantClear {
+    background: rgba(255, 107, 53, 0.1);
+    border-color: rgba(255, 107, 53, 0.3);
+    color: var(--color-plasma);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+}
+
+.variantClear:hover {
+    background: rgba(255, 107, 53, 0.18);
+    border-color: rgba(255, 107, 53, 0.5);
+}
+
+.variantClear::after {
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.25) 0%, transparent 70%);
+}
+
+/* VARIANT: memory key (ANS) */
+.variantMemory {
+    color: rgba(255, 200, 100, 0.85);
+    border-color: rgba(255, 200, 100, 0.15);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+}
+
+/* Active/pressed glow (shown during Framer Motion tap) */
+.key:active::after {
+    opacity: 1;
+}
+
+/* Label tex */
+.label {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* Corner accent dot */
+/* Tiny decorative dot in top-right corner of function keys — sci-fi detail */
+.accentDot {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-green);
+    opacity: 0.5;
+    pointer-events: none;
+}

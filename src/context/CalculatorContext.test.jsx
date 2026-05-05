@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
 import { CalculatorProvider } from './CalculatorContext'
-import {useCalculator} from '../hooks/useCalculator'
+import { useCalculator } from '../hooks/useCalculator'
 
 function TestConsumer() {
   const {

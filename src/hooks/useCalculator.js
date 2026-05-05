@@ -1,4 +1,3 @@
-// src/hooks/useCalculator.js
 import { useContext } from 'react'
 import { CalculatorContext } from '../context/CalculatorContext'
 
