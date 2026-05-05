@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useCallback, useMemo } from 'react'
+import { createContext, useReducer, useCallback, useMemo } from 'react'
 import { calculatorReducer, initialState, ACTIONS } from '../reducers/calculatorReducer'
 import { ANGLE_MODES } from '../constants/keys'
 
@@ -78,20 +78,3 @@ export function CalculatorProvider({ children }) {
         </CalculatorContext.Provider>
     )
 }
-
-// Custom hook for consuming the calculator context
-export function useCalculator() {
-    const context = useContext(CalculatorContext)
-
-    if (context === null) {
-        throw new Error(
-            '[NEXCALC] useCalculator() must be called inside <CalculatorProvider>.\n' +
-            'Fix: wrap your root in App.jsx:\n' +
-            '  <CalculatorProvider><App /></CalculatorProvider>'
-        )
-    }
-
-    return context
-}
-
-export { CalculatorContext }

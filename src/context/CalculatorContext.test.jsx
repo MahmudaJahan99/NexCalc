@@ -1,23 +1,8 @@
-// src/context/CalculatorContext.test.jsx
-//
-// Integration test for the Context + Reducer working together.
-// These tests render actual React components and interact with them
-// the way a user would — this is what @testing-library/react enables.
-//
-// ── Learning Note ────────────────────────────────────────────────────────────
-// Unit tests (like calculatorReducer.test.js) test pure functions in isolation.
-// Integration tests (like this file) test how pieces WORK TOGETHER.
-// Both are valuable — unit tests find WHERE bugs are, integration tests
-// confirm the WHOLE FLOW works end-to-end.
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { describe, it, expect } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
-import { CalculatorProvider, useCalculator } from './CalculatorContext'
+import { CalculatorProvider } from './CalculatorContext'
+import {useCalculator} from '../hooks/useCalculator'
 
-// ── Test Consumer Component ──────────────────────────────────────────────────
-// We need a real component to test the hook.
-// This simple component renders state values and exposes action buttons.
 function TestConsumer() {
   const {
     displayValue,
