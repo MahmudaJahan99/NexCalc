@@ -19,13 +19,11 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0, 0, 0, 0.08) 3px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.08) 3px,
+      rgba(0, 0, 0, 0.08) 4px);
   pointer-events: none;
   z-index: 2;
   border-radius: inherit;
@@ -62,10 +60,45 @@
   text-transform: uppercase;
 }
 
+/* clickable to cycle */
 .statusBadgeAngle {
   color: var(--color-cyan);
   border: 1px solid rgba(0, 200, 255, 0.35);
   background: rgba(0, 200, 255, 0.08);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.statusBadgeAngle:hover {
+  background: rgba(0, 200, 255, 0.16);
+  border-color: rgba(0, 200, 255, 0.6);
+}
+
+/* Angle mode transition animation */
+.angleModeChanging {
+  animation: anglePop 300ms ease forwards;
+}
+
+@keyframes anglePop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .statusBadgeError {
@@ -82,8 +115,15 @@
 }
 
 @keyframes errorPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /*  Expression line (smaller, above the main result) */
@@ -105,13 +145,14 @@
 /* Main display value */
 .mainValue {
   font-family: var(--font-mono);
-  text-align: right;
+  /* text-align: right; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
   z-index: 4;
   line-height: 1;
+  padding-right: 10px;
 
   /* Font size scales based on value length — see component */
   font-size: var(--display-font-size, 36px);
@@ -131,32 +172,59 @@
   text-shadow: 0 0 16px rgba(255, 107, 53, 0.35);
 }
 
+.mainValueText {
+  display: block;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-display);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  transition: color var(--transition-base);
+}
+
+.mainValueTextError {
+  color: var(--color-plasma);
+  text-shadow: 0 0 16px rgba(255, 107, 53, 0.35);
+}
+
 /* Cursor blink when actively typing */
 .cursor {
-  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 2px;
-  height: 0.85em;
+  height: 0.8em;
   background: var(--color-cyan);
-  margin-left: 2px;
-  vertical-align: middle;
+  box-shadow: 0 0 6px var(--color-cyan), 0 0 12px rgba(0, 200, 255, 0.4);
+  border-radius: 1px;
   animation: cursorBlink 1s step-end infinite;
-  box-shadow: 0 0 6px var(--color-cyan);
+  /* z-index above everything in the display */
+  z-index: 10;
 }
 
 @keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Corner brand mark */
 .brandMark {
   position: absolute;
-  bottom: 10px;
+  bottom: 9px;
   left: 16px;
   font-family: var(--font-display);
   font-size: 8px;
   letter-spacing: 3px;
-  color: rgba(0, 200, 255, 0.2);
+  color: rgba(0, 200, 255, 0.18);
   z-index: 4;
   pointer-events: none;
   text-transform: uppercase;
