@@ -88,9 +88,9 @@ export default function DisplayPanel() {
                 className={[styles.mainValue, isError ? styles.mainValueError : ''].join(' ')}
                 style={{ '--display-font-size': fontSize }}
             >
-                {justEvaluated ? (
+                {(justEvaluated || isError) ? (
                     <motion.span
-                        key="result"
+                        key={displayValue}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.2 }}
