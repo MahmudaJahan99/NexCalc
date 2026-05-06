@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useCalculator } from '../../../hooks/useCalculator'
 import { useKeyboard } from '@/hooks/useKeyboard'
@@ -30,12 +30,22 @@ export default function CalculatorShell() {
     // Read calculator state to know when to record history
     const { expression, displayValue, justEvaluated, isError } = useCalculator()
 
+    // Track expression BEFORE evaluation
+    const prevExpressionRef = useRef('')
+
+    // Keep previous expression updated while typing
+    useEffect(() => {
+        if (!justEvaluated) {
+            prevExpressionRef.current = expression
+        }
+    }, [expression, justEvaluated])
+
     // Record a new history entry after each successful evaluation
     useEffect(() => {
         if (justEvaluated && !isError && displayValue && displayValue !== '0') {
-            addEntry(expression, displayValue)
+            addEntry(prevExpressionRef.current, displayValue)
         }
-    }, [justEvaluated, isError, expression, displayValue, addEntry])
+    }, [justEvaluated, isError, displayValue, addEntry])
 
     return (
         <div className={styles.page}>

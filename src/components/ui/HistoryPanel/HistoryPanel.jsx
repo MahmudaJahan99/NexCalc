@@ -112,9 +112,11 @@ export default function HistoryPanel({ entries, onDelete, onClear }) {
                                             <span className={styles.entryArrow}>▶</span>
                                             <div className={styles.entryContent}>
                                                 <div className={styles.entryExpression}>
-                                                    {entry.expression} — {formatTime(entry.timestamp)}
+                                                    {entry.expression} = {entry.result}
                                                 </div>
-                                                <div className={styles.entryResult}>{entry.result}</div>
+                                                <div className={styles.entryTimestamp}>
+                                                    {formatTime(entry.timestamp)}
+                                                </div>
                                             </div>
                                             <button
                                                 className={styles.deleteBtn}
