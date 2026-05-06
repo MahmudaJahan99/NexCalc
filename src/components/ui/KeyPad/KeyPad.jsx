@@ -66,11 +66,7 @@ export default function KeyPad() {
                     <React.Fragment key={key.id}>
                         {/* Insert a row divider before specific rows */}
                         {DIVIDER_BEFORE.has(index) && (
-                            <div
-                                key={`divider-${index}`}
-                                className={styles.rowDivider}
-                                aria-hidden="true"
-                            />
+                            <div className={styles.rowDivider} aria-hidden="true" />
                         )}
 
                         <div
