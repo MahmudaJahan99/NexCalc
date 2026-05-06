@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useCalculator } from '@/hooks/useCalculator'
 import { useKeyboard } from '@/hooks/useKeyboard'

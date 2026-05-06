@@ -1,5 +1,5 @@
 import { evaluate } from '../utils/mathEngine'
-import { MAX_DISPLAY_DIGITS } from '../constants/keys'
+import { MAX_EXPRESSION_LENGTH } from '../constants/keys'
 
 // ACTION TYPES
 export const ACTIONS = {
@@ -15,6 +15,7 @@ export const ACTIONS = {
 export const initialState = {
   expression: '', // the full expression string
   displayValue: '0', // primary display line
+  prevExpression: '',
   lastAnswer: null, // stored ANS for the ANS key
   angleMode: 'DEG', // 'DEG' | 'RAD' | 'GRAD'
   isError: false, // true when the last evaluation threw
@@ -29,6 +30,18 @@ function isOperator(value) {
   return OPERATORS.includes(value)
 }
 
+// ── Helper — does this string end with something that implies a number?
+// Used to decide whether to auto-insert × before 'ans'
+function endsWithNumber(str) {
+  return /[\d\)]$/.test(str)
+}
+
+// ── Helper — does this string start with a digit or '('?
+// Used to decide whether to auto-insert × after 'ans'
+function startsWithNumber(str) {
+  return /^[\d\(]/.test(str)
+}
+
 // REDUCER
 export function calculatorReducer(state, action) {
   switch (action.type) {
@@ -39,7 +52,7 @@ export function calculatorReducer(state, action) {
       if (state.isError) return state
 
       // Cap expression length to prevent overflow
-      if (state.expression.length >= MAX_DISPLAY_DIGITS && !isOperator(value)) {
+      if (state.expression.length >= MAX_EXPRESSION_LENGTH && !isOperator(value)) {
         return state
       }
 
@@ -62,6 +75,27 @@ export function calculatorReducer(state, action) {
             displayValue: value,
             justEvaluated: false,
           }
+        }
+      }
+
+      // ── Implicit multiplication: "2" + "ans" → "2*ans"
+      if (value === 'ans' && endsWithNumber(state.expression)) {
+        const newExpression = state.expression + '*ans'
+        return {
+          ...state,
+          expression: newExpression,
+          displayValue: newExpression,
+        }
+      }
+
+      // ── Implicit multiplication: "ans" + "2" → "ans*2"
+      // i.e. if expression ends with 'ans' and user types a digit or '('
+      if (startsWithNumber(value) && state.expression.endsWith('ans')) {
+        const newExpression = state.expression + '*' + value
+        return {
+          ...state,
+          expression: newExpression,
+          displayValue: newExpression,
         }
       }
 

@@ -1,12 +1,12 @@
+import { useRef, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useCalculator } from '../../../hooks/useCalculator'
 import styles from './DisplayPanel.module.css'
-import { useRef, useEffect } from 'react'
 
 const valueVariants = {
     enter: { opacity: 0, y: -12, scale: 0.96 },
     center: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] } },
-    exit:  { opacity: 0, transition: { duration: 0.06 } },
+    exit: { opacity: 0, transition: { duration: 0.06 } },
 }
 
 // Get font size based on display value length
@@ -18,6 +18,10 @@ function getDisplayFontSize(value) {
     return '22px'
 }
 
+function tokenizeExpression(expression) {
+    return expression.split(/(\bans\b)/gi)
+}
+
 export default function DisplayPanel() {
     const {
         displayValue,
@@ -26,6 +30,7 @@ export default function DisplayPanel() {
         isError,
         lastAnswer,
         justEvaluated,
+        handleAngleModeToggle,
     } = useCalculator()
 
     // Derived value
@@ -48,7 +53,8 @@ export default function DisplayPanel() {
 
             {/*  Status bar  */}
             <div className={styles.statusBar}>
-                <span className={[styles.statusBadge, styles.statusBadgeAngle].join(' ')}>
+                <span className={[styles.statusBadge, styles.statusBadgeAngle].join(' ')}
+                    onClick={handleAngleModeToggle}>
                     {angleMode}
                 </span>
 
@@ -65,25 +71,24 @@ export default function DisplayPanel() {
                 )}
             </div>
 
+            {/* Expression line */}
             <div className={styles.expressionLine} ref={exprRef}>
                 {showExpression && (
                     <>
-                        {expression.split('').map((char, i) => {
-                            const isLast = i === expression.length - 1
-
+                        {tokenizeExpression(expression).map((token, i) => {
+                            const isAns = /^ans$/i.test(token)
                             return (
                                 <motion.span
                                     key={i}
-                                    initial={isLast ? { opacity: 0, y: 6 } : false}
-                                    animate={isLast ? { opacity: 1, y: 0 } : false}
+                                    className={isAns ? styles.ansToken : undefined}
+                                    initial={{ opacity: 0, y: 6 }}
+                                    animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.12 }}
                                 >
-                                    {char}
+                                    {isAns ? 'ANS' : token}
                                 </motion.span>
                             )
                         })}
-
-                        {/* Cursor now lives HERE */}
                         {showCursor && <span className={styles.cursor} aria-hidden="true" />}
                     </>
                 )}
@@ -95,18 +100,18 @@ export default function DisplayPanel() {
                 style={{ '--display-font-size': fontSize }}
             >
                 <AnimatePresence mode="popLayout">
-                {(justEvaluated || isError) && (
-                    <motion.span
-                        key={displayValue}
-                        variants={valueVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                    >
-                        {displayValue}
-                    </motion.span>
-                )}
-            </AnimatePresence>
+                    {(justEvaluated || isError) && (
+                        <motion.span
+                            key={displayValue}
+                            variants={valueVariants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                        >
+                            {displayValue}
+                        </motion.span>
+                    )}
+                </AnimatePresence>
             </div>
 
             {/*  Brand mark  */}
