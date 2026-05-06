@@ -45,6 +45,7 @@ export function CalculatorProvider({ children }) {
         // State values
         displayValue: state.displayValue,
         expression: state.expression,
+        prevExpression: state.prevExpression,
         angleMode: state.angleMode,
         isError: state.isError,
         lastAnswer: state.lastAnswer,

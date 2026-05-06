@@ -107,6 +107,7 @@ export function calculatorReducer(state, action) {
 
       return {
         ...state,
+        prevExpression: state.expression,
         displayValue: result,
         lastAnswer: parseFloat(result),
         expression: result,

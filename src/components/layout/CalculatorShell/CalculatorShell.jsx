@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { useCalculator } from '../../../hooks/useCalculator'
+import { useCalculator } from '@/hooks/useCalculator'
 import { useKeyboard } from '@/hooks/useKeyboard'
 import { useHistory } from '@/hooks/useHistory'
 import DisplayPanel from '@/components/ui/DisplayPanel'
@@ -28,31 +28,20 @@ export default function CalculatorShell() {
     const { entries, addEntry, deleteEntry, clearHistory } = useHistory()
 
     // Read calculator state to know when to record history
-    const { expression, displayValue, justEvaluated, isError } = useCalculator()
+    const { displayValue, prevExpression, justEvaluated, isError } = useCalculator()
 
-    // Track expression BEFORE evaluation
-    const prevExpressionRef = useRef('')
-
-    // Keep previous expression updated while typing
-    useEffect(() => {
-        if (!justEvaluated) {
-            prevExpressionRef.current = expression
-        }
-    }, [expression, justEvaluated])
-
-    // Record a new history entry after each successful evaluation
+    // Record successful evaluations in history
     useEffect(() => {
         if (justEvaluated && !isError && displayValue && displayValue !== '0') {
-            addEntry(prevExpressionRef.current, displayValue)
+            addEntry(prevExpression, displayValue)
         }
-    }, [justEvaluated, isError, displayValue, addEntry])
+    }, [justEvaluated, isError, displayValue, prevExpression, addEntry])
 
     return (
         <div className={styles.page}>
             <motion.div
                 className={styles.shell}
-                initial={shellAnimation.initial}
-                animate={shellAnimation.animate}
+                {...shellAnimation}
             >
                 {/* Brand header */}
                 <div className={styles.header}>
