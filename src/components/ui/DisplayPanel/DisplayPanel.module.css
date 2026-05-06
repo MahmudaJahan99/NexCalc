@@ -4,7 +4,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-lg);
-  padding: 16px 20px 14px;
+  padding: 12px 16px;
   overflow: hidden;
   height: 110px;
   display: flex;
@@ -133,7 +133,7 @@
 /*  Expression line (smaller, above the main result) */
 .expressionLine {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 18px;
   color: var(--color-text-secondary);
   text-align: left;
   min-height: 20px;
@@ -163,23 +163,14 @@
   z-index: 4;
   line-height: 1;
   padding-right: 10px;
-
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-
   text-align: right;
   width: 100%;
-
-  /* Font size scales based on value length — see component */
   font-size: var(--display-font-size, 36px);
-
-  /* Normal state: white text */
   color: var(--color-text-display);
-
-  /* Subtle text-shadow glow on the digits */
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-
   transition: font-size 100ms ease, color var(--transition-base);
 }
 
@@ -189,35 +180,15 @@
   text-shadow: 0 0 16px rgba(255, 107, 53, 0.35);
 }
 
-.mainValueText {
-  display: block;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--color-text-display);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-  transition: color var(--transition-base);
-}
-
-.mainValueTextError {
-  color: var(--color-plasma);
-  text-shadow: 0 0 16px rgba(255, 107, 53, 0.35);
-}
-
 /* Cursor blink when actively typing */
 .cursor {
   display: inline-block;
-
   width: 2px;
   height: 1em;
-
   margin-left: 4px;
-
   background: #00c8ff;
   box-shadow: 0 0 6px #00c8ff, 0 0 12px rgba(0, 200, 255, 0.4);
   border-radius: 1px;
-
   animation: cursorBlink 1s steps(1) infinite;
 }
 
