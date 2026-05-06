@@ -7,6 +7,9 @@
   padding: 16px 20px 14px;
   overflow: hidden;
   height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   /* Inset shadow makes it look recessed like a real LCD panel */
   box-shadow:
@@ -130,17 +133,23 @@
 /*  Expression line (smaller, above the main result) */
 .expressionLine {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--color-text-secondary);
-  text-align: right;
-  min-height: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: left;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  scrollbar-width: none;
   position: relative;
   z-index: 4;
   margin-bottom: 6px;
   letter-spacing: 0.5px;
+}
+
+.expressionLine::-webkit-scrollbar {
+  display: none;
 }
 
 /* Main display value */
@@ -154,6 +163,13 @@
   z-index: 4;
   line-height: 1;
   padding-right: 10px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  text-align: right;
+  width: 100%;
 
   /* Font size scales based on value length — see component */
   font-size: var(--display-font-size, 36px);
@@ -191,19 +207,18 @@
 
 /* Cursor blink when actively typing */
 .cursor {
-  position: absolute;
-  /* right: 0; */
-  margin-left: 5px;
-  top: 50%;
-  transform: translateY(-50%);
+  display: inline-block;
+
   width: 2px;
   height: 1em;
+
+  margin-left: 4px;
+
   background: #00c8ff;
   box-shadow: 0 0 6px #00c8ff, 0 0 12px rgba(0, 200, 255, 0.4);
   border-radius: 1px;
-  animation: cursorBlink 1s step-end infinite;
-  /* z-index above everything in the display */
-  z-index: 10;
+
+  animation: cursorBlink 1s steps(1) infinite;
 }
 
 @keyframes cursorBlink {

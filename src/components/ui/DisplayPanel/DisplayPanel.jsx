@@ -1,6 +1,7 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useCalculator } from '../../../hooks/useCalculator'
 import styles from './DisplayPanel.module.css'
+import { useRef, useEffect } from 'react'
 
 // Get font size based on display value length
 function getDisplayFontSize(value) {
@@ -9,13 +10,6 @@ function getDisplayFontSize(value) {
     if (len <= 9) return '34px'
     if (len <= 12) return '28px'
     return '22px'
-}
-
-// Animation variants for display value transitions
-const valueVariants = {
-    enter: { opacity: 0, y: -8 },
-    center: { opacity: 1, y: 0, transition: { duration: 0.12, ease: 'easeOut' } },
-    exit: { opacity: 0, y: 8, transition: { duration: 0.08, ease: 'easeIn' } },
 }
 
 export default function DisplayPanel() {
@@ -34,6 +28,14 @@ export default function DisplayPanel() {
     const showAns = justEvaluated && lastAnswer !== null
     // Show the expression line only while typing (not after evaluation result)
     const showExpression = !justEvaluated && !isError && expression.length > 0
+
+    const exprRef = useRef(null)
+
+    useEffect(() => {
+        if (exprRef.current) {
+            exprRef.current.scrollLeft = exprRef.current.scrollWidth
+        }
+    }, [expression])
 
     return (
         <div className={styles.display}>
@@ -57,31 +59,45 @@ export default function DisplayPanel() {
                 )}
             </div>
 
-            {showExpression && (
-                <div className={styles.expressionLine}>
-                    {expression}
-                </div>
-            )}
+            <div className={styles.expressionLine} ref={exprRef}>
+                {showExpression && (
+                    <>
+                        {expression.split('').map((char, i) => {
+                            const isLast = i === expression.length - 1
+
+                            return (
+                                <motion.span
+                                    key={i}
+                                    initial={isLast ? { opacity: 0, y: 6 } : false}
+                                    animate={isLast ? { opacity: 1, y: 0 } : false}
+                                    transition={{ duration: 0.12 }}
+                                >
+                                    {char}
+                                </motion.span>
+                            )
+                        })}
+
+                        {/* Cursor now lives HERE */}
+                        {showCursor && <span className={styles.cursor} aria-hidden="true" />}
+                    </>
+                )}
+            </div>
 
             {/* Main display value (animated) */}
             <div
                 className={[styles.mainValue, isError ? styles.mainValueError : ''].join(' ')}
                 style={{ '--display-font-size': fontSize }}
             >
-                <AnimatePresence mode="popLayout">
+                {justEvaluated ? (
                     <motion.span
-                        key={displayValue}
-                        variants={valueVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
+                        key="result"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2 }}
                     >
                         {displayValue}
                     </motion.span>
-                </AnimatePresence>
-
-                {/* Blinking cursor when user is actively typing */}
-                {showCursor && <span className={styles.cursor} aria-hidden="true" />}
+                ) : null}
             </div>
 
             {/*  Brand mark  */}
