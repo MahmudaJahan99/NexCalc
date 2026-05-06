@@ -21,7 +21,7 @@ export const CALCULATOR_KEYS = [
   { id: 'sin',    label: 'sin',    value: 'sin(',   type: KEY_TYPES.FUNCTION },
   { id: 'cos',    label: 'cos',    value: 'cos(',   type: KEY_TYPES.FUNCTION },
   { id: 'tan',    label: 'tan',    value: 'tan(',   type: KEY_TYPES.FUNCTION },
-  { id: 'log',    label: 'log',    value: 'log(',   type: KEY_TYPES.FUNCTION },
+  { id: 'log',    label: 'log',    value: 'log10(',   type: KEY_TYPES.FUNCTION },
   { id: 'ln',     label: 'ln',     value: 'log(',   type: KEY_TYPES.FUNCTION },
 
   // Row 3 — Powers & roots

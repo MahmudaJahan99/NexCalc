@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { CALCULATOR_KEYS, KEY_TYPES } from '@/constants/keys'
 import { useCalculator } from '../../../hooks/useCalculator'
 import CalcKey from '@/components/ui/CalcKey'
@@ -63,7 +63,7 @@ export default function KeyPad() {
                 const isDisabled = isError && key.value !== 'clear'
 
                 return (
-                    <>
+                    <React.Fragment key={key.id}>
                         {/* Insert a row divider before specific rows */}
                         {DIVIDER_BEFORE.has(index) && (
                             <div
@@ -86,7 +86,7 @@ export default function KeyPad() {
                                 disabled={isDisabled}
                             />
                         </div>
-                    </>
+                    </React.Fragment>
                 )
             })}
         </div>

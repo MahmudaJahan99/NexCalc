@@ -1,7 +1,7 @@
 import { create, all } from 'mathjs'
 
 // Create a mathjs instance with all functions/operators
-const math = create(all)
+const math = create(all, { number: 'number' })
 
 /**\
  * Evaluate an expression string safely.
@@ -34,20 +34,22 @@ export function evaluate(expression, angleMode = 'DEG', lastAnswer = 0) {
     }
 
     // Format: avoid floating-point noise like 0.10000000000000001
-    const formatted = formatResult(raw)
-    return { result: formatted, error: null }
-
-  } catch (err) {
-    return { result: null, error: 'Syntax Error', err }
+    return { result: formatResult(raw), error: null }
+  } catch {
+    return { result: null, error: 'Syntax Error' }
   }
 }
 
 // Convert user-friendly trig functions to mathjs's radian-based ones
 function convertTrigToDeg(expr) {
-  return expr
-    .replace(/\bsin\(/g, 'sin(pi/180 * ')
-    .replace(/\bcos\(/g, 'cos(pi/180 * ')
-    .replace(/\btan\(/g, 'tan(pi/180 * ')
+  return expr.replace(/\b(asin|acos|atan|sin|cos|tan)\(/g, (_, fn) => {
+    if (fn === 'asin') return '(180/pi)*asin('
+    if (fn === 'acos') return '(180/pi)*acos('
+    if (fn === 'atan') return '(180/pi)*atan('
+    if (fn === 'sin') return 'sin((pi/180)*'
+    if (fn === 'cos') return 'cos((pi/180)*'
+    if (fn === 'tan') return 'tan((pi/180)*'
+  })
 }
 
 // Format result to avoid floating-point issues and use scientific notation when appropriate
