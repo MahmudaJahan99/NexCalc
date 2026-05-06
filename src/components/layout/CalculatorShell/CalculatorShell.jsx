@@ -1,12 +1,11 @@
-import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useCalculator } from '@/hooks/useCalculator'
 import { useKeyboard } from '@/hooks/useKeyboard'
 import { useHistory } from '@/hooks/useHistory'
 import DisplayPanel from '@/components/ui/DisplayPanel'
 import KeyPad from '@/components/ui/KeyPad'
 import HistoryPanel from '@/components/ui/HistoryPanel'
 import styles from './CalculatorShell.module.css'
+import { useHistorySync } from '@/hooks/useHistorySync'
 
 // Animation for the whole calculator shell on initial load
 const shellAnimation = {
@@ -26,16 +25,7 @@ export default function CalculatorShell() {
 
     // History state and actions
     const { entries, addEntry, deleteEntry, clearHistory } = useHistory()
-
-    // Read calculator state to know when to record history
-    const { displayValue, prevExpression, justEvaluated, isError } = useCalculator()
-
-    // Record successful evaluations in history
-    useEffect(() => {
-        if (justEvaluated && !isError && displayValue && displayValue !== '0') {
-            addEntry(prevExpression, displayValue)
-        }
-    }, [justEvaluated, isError, displayValue, prevExpression, addEntry])
+    useHistorySync(addEntry)
 
     return (
         <div className={styles.page}>
