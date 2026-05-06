@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // Redirect 404s back to index.html, preserving the path as a query string
+      const path = window.location.pathname.slice(1)
+      window.location.replace('/' + path.split('/')[0] + '/?p=/' + path.slice(path.indexOf('/') + 1))
+    </script>
+  </head>
+</html>
