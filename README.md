@@ -1,16 +1,75 @@
-# React + Vite
+# NEXCALC — Scientific Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A futuristic sci-fi scientific calculator built with React 19. This is a learning project exploring core modern React concepts including `useReducer`, `useContext`, custom hooks, and component composition.
 
-Currently, two official plugins are available:
+**[Live Demo →](https://mahmudajahan99.github.io/NexCalc/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+![NEXCALC Demo](./src/assets/mahmudajahan99.github.io_NexCalc_.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Full scientific calculator — trig functions, logarithms, powers, roots, and more
+- DEG / RAD / GRAD angle mode toggle
+- ANS key — recall the last result in any expression
+- Calculation history with timestamps, stored in localStorage
+- Keyboard support — type expressions directly from your keyboard
+- Animated display with entry/result transitions via Framer Motion
+- Sci-fi aesthetic — cyan and green accents on a deep navy dark theme
+
+---
+
+## React Concepts Practiced
+
+| Concept | Where it appears |
+|---|---|
+| `useReducer` | `calculatorReducer.js` — the entire calculator state machine |
+| `useContext` + split contexts | `CalculatorStateContext` and `CalculatorActionsContext` — prevents unnecessary re-renders |
+| Custom hooks | `useCalculator`, `useKeyboard`, `useHistory`, `useHistorySync` |
+| `useEffect` + cleanup | `useKeyboard` — attaches and removes the global keydown listener |
+| `useRef` | `useHistory` — skips the first-render localStorage write |
+| `useCallback` + `useMemo` | `CalculatorContext` — stable action references and memoized state |
+| Component composition | `CalcKey` — one component renders every button via props |
+
+---
+
+## Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| React 19 | UI framework |
+| Vite | Build tool and dev server |
+| Math.js | Safe expression parsing and evaluation |
+| Framer Motion | Button and display animations |
+| CSS Modules | Scoped component styles |
+| Vitest | Unit testing |
+| ESLint + Prettier | Code quality |
+
+---
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `0–9` | Input digits |
+| `+ - * /` | Operators |
+| `Enter` or `=` | Evaluate |
+| `Backspace` | Delete last character |
+| `Escape` or `Delete` | Clear (AC) |
+| `( )` | Parentheses |
+| `.` | Decimal point |
+
+---
+
+## 👩‍💻 Author
+
+Mahmuda Jahan. Built as Project of a React 19 learning journey.
+
+---
+
+## License
+
+MIT
